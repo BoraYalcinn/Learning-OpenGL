@@ -15,7 +15,7 @@ const GLint WIDTH = 800, HEIGHT = 600;
 const float toRadians = 3.14159265f / 180.0f; // degree to Radians 
 
 
-GLuint VAO, VBO, IBO,shader, uniformModel;
+GLuint VAO, VBO, IBO,shader, uniformModel, uniformProjection;
 
 float curAngle = 0.0f;
 
@@ -30,37 +30,38 @@ float maxSize = 0.8f;
 float minSize = 0.1f;
 
 // Vertex Shader
-static const char* vShader = "                                          \n\
-#version 330                                                            \n\
-                                                                        \n\
-layout (location = 0) in vec3 pos;                                      \n\
-                                                                        \n\
-out vec4 vCol;                                                          \n\
-                                                                        \n\
-                                                                        \n\
-uniform mat4 model;                                                     \n\
-                                                                        \n\
-void main()                                                             \n\
-{                                                                       \n\
-    vCol = vec4(clamp(pos, 0.0f, 1.0f), 1.0f);                              \n\
-    gl_Position = model * vec4(0.4 * pos.x , 0.4 * pos.y, pos.z, 1.0);  \n\
+static const char* vShader = "                                                          \n\
+#version 330                                                                            \n\
+                                                                                        \n\
+layout (location = 0) in vec3 pos;                                                      \n\
+                                                                                        \n\
+out vec4 vCol;                                                                          \n\
+                                                                                        \n\
+                                                                                        \n\
+uniform mat4 model;                                                                     \n\
+uniform mat4 projection;                                                                \n\
+                                                                                        \n\
+void main()                                                                             \n\
+{                                                                                       \n\
+    vCol = vec4(clamp(pos, 0.0f, 1.0f), 1.0f);                                          \n\
+    gl_Position = projection * model  * vec4(0.4 * pos.x , 0.4 * pos.y, pos.z, 1.0);    \n\
 }";
 
 // Fragment Shader
-static const char* fShader = "                                  \n\
-#version 330                                                    \n\
-                                                                \n\
-in vec4 vCol;                                                           \n\
-                                                                        \n\
-                                                                        \n\
-                                                                        \n\
-out vec4 colour;                                                \n\
-                                                                \n\
-void main()                                                     \n\
-{                                                               \n\
-    colour = vCol;                                              \n\
-                                                                \n\
-                                                                \n\
+static const char* fShader = "                                                  \n\
+#version 330                                                                    \n\
+                                                                                \n\
+in vec4 vCol;                                                                   \n\
+                                                                                \n\
+                                                                                \n\
+                                                                                \n\
+out vec4 colour;                                                                \n\
+                                                                                \n\
+void main()                                                                     \n\
+{                                                                               \n\
+    colour = vCol;                                                              \n\
+                                                                                \n\
+                                                                                \n\
 }";
 
 
@@ -162,6 +163,7 @@ void CompileShaders() {
     }
 
 	uniformModel = glGetUniformLocation(shader, "model");
+    uniformProjection = glGetUniformLocation(shader, "projection");
 
 
 }
@@ -222,6 +224,7 @@ int main() {
     CreateTriangle();
     CompileShaders();
 
+    glm::mat4 projection = glm::perspective(45.0f, (GLfloat)bufferHeight / (GLfloat)bufferHeight,0.1f,100.0f);
 
     // Loop Until window is closed
     while (!glfwWindowShouldClose(mainWindow)) {
@@ -268,6 +271,9 @@ int main() {
         
         // Translation and Rotation
         // model = glm::translate(model, glm::vec3(triOffset, 0.0f, 0.0f));
+
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -2.5f)); // move the triangle back a bit so we can see it better when rotating
+		// model = glm::translate(model, glm::vec3(0.0f, triOffset, -2.5f));  would result in the triangle moving up and down while rotating
         model = glm::rotate(model, curAngle * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
         // model = glm::translate(model, glm::vec3(triOffset, 0.0f, 0.0f));
         
@@ -279,6 +285,7 @@ int main() {
 
         glUniform1f(uniformModel,triOffset);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection)); // 3D projection
 
         glBindVertexArray(VAO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
