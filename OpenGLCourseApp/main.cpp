@@ -23,19 +23,6 @@ std::vector<Mesh*> meshList;
 std::vector<Shader> shaderList;
 
 
-
-float curAngle = 0.0f;
-
-bool direction = true;
-float triOffset = 0.0f;
-float triMaxoffset = 0.7f;
-float triIncrement = 0.0001f;
-
-bool sizeDirection = true;
-float curSize = 0.4f;
-float maxSize = 0.8f;
-float minSize = 0.1f;
-
 // Vertex Shader
 static const char* vShader = "Shaders/shader.vert";
 
@@ -92,35 +79,7 @@ int main() {
         // Get + Handle user input events
         glfwPollEvents();
         
-        if (direction) {
-			triOffset += triIncrement;
-        }
-        else {
-			triOffset -= triIncrement;
-        }
-
-        if (abs(triOffset) >= triMaxoffset) {
-            direction = !direction;
-        }
-
-        
-        if (curAngle >= 360) {
-            curAngle -= 360;
-        }
-        else {
-			curAngle += 0.02f;
-        }
-
-        if (sizeDirection) {
-			curSize += 0.0001f;
-        }
-        else {
-			curSize -= 0.0001f;
-        }
-
-        if (curSize >= maxSize || curSize <= minSize) {
-            sizeDirection = !sizeDirection;
-        }
+      
 
         // Clear window
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -133,14 +92,14 @@ int main() {
         glm::mat4 model(1.0f);
         
         
-		model = glm::translate(model, glm::vec3(triOffset, 0.0f, -2.5f)); // move the triangle back a bit so we can see it better when rotating
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -2.5f)); // move the triangle back a bit so we can see it better when rotating
         model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f)); // you could also scale it in just one axis, for example: glm::vec3(curSize,1.0f,1.0f) would only scale it in the x axis
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection)); // 3D projection
         meshList[0]->RenderMesh();
 
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(-triOffset, 1.0f, -2.5f));
+        model = glm::translate(model, glm::vec3(0.0f, 1.0f, -2.5f));
         model = glm::scale(model, glm::vec3(0.4f,0.4f,1.0f));
         glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
         meshList[1]->RenderMesh();
