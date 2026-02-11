@@ -14,8 +14,6 @@
 #include "Mesh.h"
 #include "Shader.h"
 
-// Window Dimensions
-const GLint WIDTH = 800, HEIGHT = 600;
 const float toRadians = 3.14159265f / 180.0f; // degree to Radians 
 
 // Vector of meshes
