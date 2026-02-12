@@ -7,9 +7,10 @@ out vec4 vCol;
  
 uniform mat4 model;  
 uniform mat4 projection;  
+uniform mat4 view;
      
 void main() 
 {   
     vCol = vec4(clamp(pos, 0.0f, 1.0f), 1.0f);  
-    gl_Position = projection * model  * vec4(pos.x , pos.y, pos.z, 1.0);
+    gl_Position = projection * view * model  * vec4(pos.x , pos.y, pos.z, 1.0);
 }
