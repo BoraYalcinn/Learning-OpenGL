@@ -1,22 +1,18 @@
 #pragma once
 
-#include <GL/glew.h>
+#include <GL\glew.h>
 
 #include "stb_image.h"
-#include <string>
 
 class Texture
 {
-
 public:
 	Texture();
-	
 	Texture(char* fileLoc);
-	
+
 	void LoadTexture();
 	void UseTexture();
 	void ClearTexture();
-	
 
 	~Texture();
 
@@ -25,6 +21,5 @@ private:
 	int width, height, bitDepth;
 
 	char* fileLocation;
-
-
 };
+

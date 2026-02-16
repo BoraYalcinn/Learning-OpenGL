@@ -22,7 +22,7 @@ Texture::Texture(char* fileLoc)
 
 void Texture::LoadTexture()
 {
-	unsigned char* texData = stbi_load(fileLocation, &width, &height, &bitDepth, 0);
+	unsigned char *texData = stbi_load(fileLocation, &width, &height, &bitDepth, 0);
 	if (!texData)
 	{
 		printf("Failed to find: %s\n", fileLocation);
@@ -58,7 +58,7 @@ void Texture::ClearTexture()
 	width = 0;
 	height = 0;
 	bitDepth = 0;
-	fileLocation = (char*) "";
+	fileLocation = (char*)"";
 }
 
 
