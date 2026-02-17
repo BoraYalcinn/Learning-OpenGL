@@ -14,6 +14,9 @@ public:
 
 	void keyControl(bool* keys,GLfloat deltaTime); // passing the array of keys from the Window class to the Camera class to control the camera movement
 	void mouseControl(GLfloat xChange,GLfloat yChange);
+	
+	glm::vec3 getCameraPosition();
+	
 	glm::mat4 calculateViewMatrix(); // calculates the view matrix using the position, front and up vectors of the camera
 
 
