@@ -39,6 +39,12 @@
     <ClCompile Include="Material.cpp">
       <Filter>Kaynak Dosyalar</Filter>
     </ClCompile>
+    <ClCompile Include="DirectionalLight.cpp">
+      <Filter>Kaynak Dosyalar</Filter>
+    </ClCompile>
+    <ClCompile Include="PointLight.cpp">
+      <Filter>Kaynak Dosyalar</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mesh.h">
@@ -60,6 +66,15 @@
       <Filter>Üst Bilgi Dosyaları</Filter>
     </ClInclude>
     <ClInclude Include="Material.h">
+      <Filter>Üst Bilgi Dosyaları</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectionalLight.h">
+      <Filter>Üst Bilgi Dosyaları</Filter>
+    </ClInclude>
+    <ClInclude Include="PointLight.h">
+      <Filter>Üst Bilgi Dosyaları</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonValues.h">
       <Filter>Üst Bilgi Dosyaları</Filter>
     </ClInclude>
   </ItemGroup>
